@@ -1,14 +1,19 @@
 /* eslint-disable */
 import './App.css';
+import './components/Link'
+import React, { useState } from 'react';
 
-export default function App(props){
+export default function App(){
 
-  function fetchData(){
-    console.log('Fetching...')
-    var url = 'http://127.0.0.1:8000/api/test/'
+  const [link_token, set_link_token] = useState(null)
 
-    fetch(url).then(response => response.json()).then(data => console.log(data))
+  function fetchLinkToken(){
+    console.log('Fetching Link Token...')
+    var url = 'http://127.0.0.1:8000/plaid_api/link_token/'
+
+    fetch(url).then(response => response.json()).then(data => set_link_token(data.link_token))
   }
+
 
 
   return (
@@ -16,13 +21,13 @@ export default function App(props){
       <div>
         Dashboard
       </div>
-      <div>
-        <button id="link-btn" onClick = {() => {fetchData()}}>Link Account</button>
-      </div>
+      {/* <div>
+        <button id="link-btn" onClick = {() => {fetchLinkToken()}}>Link Token</button>
+      </div> */}
       
     </div>
     
     
+    
   );
 }
-
