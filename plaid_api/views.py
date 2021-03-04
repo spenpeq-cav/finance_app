@@ -7,6 +7,7 @@ from rest_framework.response import Response
 import plaid
 from django.http import JsonResponse
 from decouple import config
+import json
 
 client = plaid.Client(client_id= config('PLAID_CLIENT_ID'), secret= config('PLAID_SECRET_SANDBOX'), environment='sandbox')
 
@@ -26,5 +27,21 @@ def create_link_token(request):
     link_token = response['link_token']
     return JsonResponse(link_token)
 
+@api_view(['GET', 'POST'])
 def get_access_token(request):
-    return({})
+    body_data = json.loads(request.body.decode())
+    public_token = body_data['public_token']
+    
+
+    exchange_response = client.Item.public_token.exchange(public_token)
+    access_token = exchange_response['access_token']
+    
+    return JsonResponse(exchange_response)
+
+@api_view(['GET', 'POST'])
+def get_accounts(request):
+    body_data = json.loads(request.body.decode())
+    access_token = body_data['access_token']
+    
+    accounts_response = client.Accounts.get(access_token)
+    return JsonResponse(accounts_response)

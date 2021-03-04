@@ -2,22 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { PlaidLink } from 'react-plaid-link';
 
 function Link({match}) {
-    const onExit = (error, metadata) => console.log('onExit', error, metadata);
-    
-    const onEvent = (eventName, metadata) => {
-      console.log('onEvent', eventName, metadata);
-    }
+    const [link_token, set_link_token] = useState(null)
+    const [access_token, set_access_token] = useState(null)
     
     const onSuccess = (token, metadata) =>{
-      console.log('onSuccess', token, metadata);
+      console.log('Exchanging Access Token...')
+      var url = 'http://127.0.0.1:8000/plaid_api/access_token/'
+      const configs = {
+        method: "POST",
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+          public_token: token,
+        })
+      }
+      
+      fetch(url, configs).then(response => response.json()).then(data => set_access_token(data.access_token))
     }
-    const [link_token, set_link_token] = useState(null)
+    
 
     function fetchLinkToken(){
       console.log('Fetching Link Token...')
       var url = 'http://127.0.0.1:8000/plaid_api/link_token/'
 
       fetch(url).then(response => response.json()).then(data => set_link_token(data.link_token))
+      
+    }
+
+    function fetchAccounts(){
+      console.log('Accounts info...')
+      var url = 'http://127.0.0.1:8000/plaid_api/accounts/'
+      const configs = {
+        method: "POST",
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+          access_token: access_token,
+        })
+      }
+      fetch(url, configs).then(response => response.json()).then(data => console.log(data))
     }
     
     useEffect(() => {
@@ -28,16 +49,21 @@ function Link({match}) {
           <div>
             <button id="link-btn" onClick = {() => {fetchLinkToken()}}>Link Token</button>
           </div>
+
           <PlaidLink
           className="CustomButton"
           style={{ padding: '20px', fontSize: '16px', cursor: 'pointer' }}
           token={link_token ? link_token : ''}
-          onExit={onExit}
+          
           onSuccess={onSuccess}
-          onEvent={onEvent}
+          
         >
           Open Link and connect your bank!
         </PlaidLink>
+
+        <div>
+            <button id="accounts-btn" onClick = {() => {fetchAccounts()}}>Get Account Info</button>
+          </div>
       </div>
     );
 }
