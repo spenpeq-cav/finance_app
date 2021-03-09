@@ -38,10 +38,18 @@ def get_access_token(request):
     
     return JsonResponse(exchange_response)
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def get_accounts(request):
     body_data = json.loads(request.body.decode())
     access_token = body_data['access_token']
     
     accounts_response = client.Accounts.get(access_token)
     return JsonResponse(accounts_response)
+
+@api_view(['POST'])
+def get_transactions(request):
+    body_data = json.loads(request.body.decode())
+    access_token = body_data['access_token']
+    
+    transactions_response = client.Transactions.get(access_token, start_date='2021-02-09', end_date='2021-03-09')
+    return JsonResponse(transactions_response)
