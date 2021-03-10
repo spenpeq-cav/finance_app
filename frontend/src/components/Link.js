@@ -65,6 +65,7 @@ function Link({match}) {
     return (
       <div>
 
+        <h1>Connecting to API Testing</h1>
         <div>
           <button id="link-btn" onClick = {() => {fetchLinkToken()}}>Link Token</button>
         </div>
