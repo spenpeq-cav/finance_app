@@ -13,9 +13,10 @@ client = plaid.Client(client_id= config('PLAID_CLIENT_ID'), secret= config('PLAI
 
 @api_view(['GET', 'POST'])
 def create_link_token(request):
+    user = request.user
     data = {
         'user': {
-            'client_user_id': 'test_id',
+            'client_user_id': 'test',
         },
         'products': ['auth','transactions'],
         'client_name': 'My App',
@@ -29,13 +30,14 @@ def create_link_token(request):
 
 @api_view(['GET', 'POST'])
 def get_access_token(request):
+    user = request.user
     body_data = json.loads(request.body.decode())
     public_token = body_data['public_token']
     
 
     exchange_response = client.Item.public_token.exchange(public_token)
     access_token = exchange_response['access_token']
-    
+    user.access_token = access_token
     return JsonResponse(exchange_response)
 
 @api_view(['POST'])
