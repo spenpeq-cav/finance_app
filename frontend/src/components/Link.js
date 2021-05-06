@@ -60,34 +60,29 @@ function Link({match}) {
     }
     
     useEffect(() => {
-      
-    })
+      if(link_token === ''){
+        fetchLinkToken()
+      }
+    }, [link_token])
+
     return (
       <div>
-
-        <h1>Connecting to API Testing</h1>
-        <div>
-          <button id="link-btn" onClick = {() => {fetchLinkToken()}}>Link Token</button>
-        </div>
+        
+        <h1>Connect to Plaid to get started.</h1>
 
         <PlaidLink
         className="CustomButton"
         style={{ padding: '20px', fontSize: '16px', cursor: 'pointer' }}
         token={link_token ? link_token : ''}
         onSuccess={onSuccess}>
-          Open Link and connect your bank!
+          Open Plaid and connect your bank!
         </PlaidLink>
-
-        <div>
-          <button id="accounts-btn" onClick = {() => {fetchAccounts()}}>Get Accounts</button>
-        </div>
 
         <div>
           <button id="transactions-btn" onClick = {() => {fetchTransactions()}}>Get Transactions</button>
         </div>
 
         <div>
-          <ReactJson src={accounts} theme="monokai" collapsed= {true} />
           <ReactJson src={transactions} theme="monokai" collapsed= {true} />
         </div>
 
