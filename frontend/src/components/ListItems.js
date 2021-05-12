@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -28,16 +28,18 @@ const useStyles = makeStyles(({
 
 function ListItems() {
     const classes = useStyles();
+
+    
     return (
         <div>
-            <ListItem button className={classes.item}>
+            <ListItem button className={classes.item} to={'/dashboard'} component={ Link }>
                 <ListItemIcon className={classes.icons}>
                     <DashboardIcon />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" className={classes.buttonText} disableTypography/>
             </ListItem>
 
-            <ListItem button className={classes.item}>
+            <ListItem button className={classes.item} to={'/accounts'} component={ Link }>
                 <ListItemIcon className={classes.icons}>
                     <BarChartIcon />
                 </ListItemIcon>
