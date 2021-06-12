@@ -219,6 +219,14 @@ function DashboardScreen() {
                                         </Typography>
                                     </Paper>
                                 </Grid>
+                                <Grid item xs={12}>
+                                    <Paper className={classes.paper}>
+                                        <Typography>All Transactions</Typography>
+                                        <Typography>Total Transactions: {transactions['total_transactions']}</Typography>
+                                        <Typography>Date: {transactions['transactions'][0].date} | {transactions['transactions'][0].name} | $ {transactions['transactions'][0].amount}  </Typography>
+                                        <Typography>Date: {transactions['transactions'][1].date} | {transactions['transactions'][1].name} | $ {transactions['transactions'][1].amount}  </Typography>
+                                    </Paper>
+                                </Grid>
                             </Grid>
                             <div>
                                 <ReactJson src={transactions} theme="monokai" collapsed= {true} />
