@@ -159,63 +159,16 @@ function DashboardScreen() {
                                         </Typography>
                                     </Paper>
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item xs={12}>
                                     <Paper className={classes.paper}>
-                                        <Typography>Funds and some more text to put in here</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
+                                        <Typography>All Accounts</Typography>
+                                        <Typography>Total Accounts: {transactions['accounts'].length}</Typography>
                                         <Typography>
-                                            $ 3,345.56
-                                        </Typography>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Paper className={classes.paper}>
-                                        <Typography>Funds and some more text to put in here</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>
-                                            $ 3,345.56
-                                        </Typography>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Paper className={classes.paper}>
-                                        <Typography>Funds and some more text to put in here</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>
-                                            $ 3,345.56
-                                        </Typography>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Paper className={classes.paper}>
-                                        <Typography>Funds and some more text to put in here</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>
-                                            $ 3,345.56
-                                        </Typography>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Paper className={classes.paper}>
-                                        <Typography>Funds and some more text to put in here</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>Funds</Typography>
-                                        <Typography>
-                                            $ 3,345.56
+                                            {transactions['accounts'].map((acc) => (
+                                                <div key={transactions['accounts'].index} >
+                                                    {acc.name} | $ {acc.balances['current']} | {acc.type}
+                                                </div>
+                                            ))}
                                         </Typography>
                                     </Paper>
                                 </Grid>
@@ -223,10 +176,15 @@ function DashboardScreen() {
                                     <Paper className={classes.paper}>
                                         <Typography>All Transactions</Typography>
                                         <Typography>Total Transactions: {transactions['total_transactions']}</Typography>
-                                        <Typography>Date: {transactions['transactions'][0].date} | {transactions['transactions'][0].name} | $ {transactions['transactions'][0].amount}  </Typography>
-                                        <Typography>Date: {transactions['transactions'][1].date} | {transactions['transactions'][1].name} | $ {transactions['transactions'][1].amount}  </Typography>
+                                        <Typography>
+                                            {transactions['transactions'].map((tr) => (
+                                                <div key={transactions['transactions'].index} >
+                                                    Date: {tr.date} | {tr.name} | $ {tr.amount} 
+                                                </div>
+                                            ))}
+                                        </Typography>
                                     </Paper>
-                                </Grid>
+                                </Grid> 
                             </Grid>
                             <div>
                                 <ReactJson src={transactions} theme="monokai" collapsed= {true} />
